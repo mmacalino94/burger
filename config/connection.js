@@ -1,3 +1,5 @@
+//Having a hrd time with the connection and deploying the heroku link. My friend and I looked it over and everything should be ok.
+
 var mysql = require("mysql");
 
 var connection = mysql.createConnection({
