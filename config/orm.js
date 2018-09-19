@@ -2,6 +2,7 @@ var connection = require("../config/connection.js");
 
 function printQuestionMarks(num)    {
     var arr = [];
+
     for (var i = 0; i < num; i++)   {
         arr.push("?");
     }
@@ -10,12 +11,15 @@ function printQuestionMarks(num)    {
 
 function objToSql(ob)   {
     var arr = [];
+
     for (var key in ob) {
         var value = ob[key];
         if (Object.hasOwnProperty.call(ob, key))    {
+
             if (typeof value === "string" && value.indexOf(" ") >= 0)    {
                 value = "'" + value + "'";
             }
+
             arr.push(key + "=" + value);
         }
     }
@@ -23,7 +27,7 @@ function objToSql(ob)   {
 }
 
 var orm = {
-    selectAll: function(tableInput, cb) {
+    all: function(tableInput, cb) {
         var queryString = "SELECT * FROM " + tableInput + ";";
         connection.query(queryString, function(err, result) {
             if (err)    {
@@ -33,7 +37,7 @@ var orm = {
         });
     },
 
-    insertOne: function(table, cols, vals, cb) {
+    createOne: function(table, cols, vals, cb) {
         var queryString = "INSERT INTO " + table;
 
         queryString += " (";
@@ -41,7 +45,7 @@ var orm = {
         queryString += ") ";
         queryString += "VALUES (";
         queryString += printQuestionMarks(vals.length);
-        queryString += ") "
+        queryString += ") ";
 
         console.log(queryString);
 
@@ -73,7 +77,6 @@ var orm = {
 
     delete: function(table, condition, cb) {
         var queryString = "DELETE FROM " + table;
-
         queryString += " WHERE ";
         queryString += condition;
 
